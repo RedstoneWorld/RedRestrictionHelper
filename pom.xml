@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.redstoneworld.redplugin</groupId>
-    <artifactId>RedRestrictionHelper</artifactId>
+    <groupId>de.redstoneworld.redrestrictionhelper</groupId>
+    <artifactId>redrestrictionhelper</artifactId>
     <version>0.0.1-Snapshot</version>
 
     <properties>
@@ -40,7 +40,18 @@
             </plugin>
         </plugins>
     </build>
-
+    
+    <distributionManagement>
+        <snapshotRepository>
+            <id>cloudsmith</id>
+            <url>https://maven.cloudsmith.io/redstoneworld/redrestrictionhelper/</url>
+        </snapshotRepository>
+        <repository>
+            <id>cloudsmith</id>
+            <url>https://maven.cloudsmith.io/redstoneworld/redrestrictionhelper/</url>
+        </repository>
+    </distributionManagement>
+    
     <repositories>
         <repository>
             <id>spigot-repo</id>
