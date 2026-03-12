@@ -11,19 +11,13 @@ import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
 import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlotSquared_V7 extends RestrictionPluginCheck {
     
-    public PlotSquared_V7(Plugin plugin) {
-        super(plugin);
-    }
-    
-    @Override
-    public Result runCheck(RestrictionCheck check) {
+    public static Result runCheck(RestrictionCheck check) {
         
         /*
         * Note: Only the Plot membership tiers and the bypass-permission are checked here.
@@ -164,7 +158,7 @@ public class PlotSquared_V7 extends RestrictionPluginCheck {
         return new Result(passed, reasons);
     }
     
-    public boolean isPlotWorld(Location location) {
+    public static boolean isPlotWorld(Location location) {
         PlotArea area = PlotSquared.get().getPlotAreaManager().getPlotArea(location);
         return area != null;
     }

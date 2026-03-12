@@ -15,19 +15,13 @@ import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
 import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WorldGuard_V7 extends RestrictionPluginCheck {
     
-    public WorldGuard_V7(Plugin plugin) {
-        super(plugin);
-    }
-    
-    @Override
-    public Result runCheck(RestrictionCheck check) {
+    public static Result runCheck(RestrictionCheck check) {
         
         Location wgLocation = BukkitAdapter.adapt(check.getLocation());
         Player player = check.getTargetPlayer();

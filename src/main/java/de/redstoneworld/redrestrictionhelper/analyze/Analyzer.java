@@ -113,16 +113,14 @@ public class Analyzer {
         List<ResultReasons> reasons = new ArrayList<>();
         
         if (bukkitPlugin.getServer().getPluginManager().isPluginEnabled(RestrictionPlugins.WORLD_GUARD.getName())) {
-            WorldGuard_V7 wg = new WorldGuard_V7(bukkitPlugin);
-            Result wgResult = wg.runCheck(check);
+            Result wgResult = WorldGuard_V7.runCheck(check);
             
             if (!wgResult.isAllowed()) passed = false;
             if (!wgResult.getResultReason().isEmpty()) reasons.addAll(wgResult.getResultReason());
         }
         
         if (bukkitPlugin.getServer().getPluginManager().isPluginEnabled(RestrictionPlugins.PLOT_SQUARED.getName())) {
-            PlotSquared_V7 ps = new PlotSquared_V7(bukkitPlugin);
-            Result psResult = ps.runCheck(check);
+            Result psResult = PlotSquared_V7.runCheck(check);
             
             if (!psResult.isAllowed()) passed = false;
             if (!psResult.getResultReason().isEmpty()) reasons.addAll(psResult.getResultReason());
