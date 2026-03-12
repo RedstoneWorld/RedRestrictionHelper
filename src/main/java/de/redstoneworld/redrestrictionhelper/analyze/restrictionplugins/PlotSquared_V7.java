@@ -1,27 +1,29 @@
-package de.redstoneworld.redrestrictionhelper.restrictionplugins;
+package de.redstoneworld.redrestrictionhelper.analyze.restrictionplugins;
 
 import com.plotsquared.bukkit.util.BukkitUtil;
+import com.plotsquared.core.PlotSquared;
 import com.plotsquared.core.location.Location;
 import com.plotsquared.core.permissions.Permission;
 import com.plotsquared.core.plot.Plot;
+import com.plotsquared.core.plot.PlotArea;
 import de.redstoneworld.redrestrictionhelper.RestrictionCheck;
+import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
+import de.redstoneworld.redrestrictionhelper.analyze.Result;
 import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlotSquared_V7 {
-
-    private final Plugin plugin;
-    private final RestrictionCheck check;
+public class PlotSquared_V7 extends RestrictionPluginCheck {
     
+    public PlotSquared_V7(Plugin plugin) {
+        super(plugin);
+    }
     
-    public PlotSquared_V7(Plugin plugin, RestrictionCheck check) {
-        this.plugin = plugin;
-        this.check = check;
-        
+    public Result runCheck(RestrictionCheck check) {
         
         /*
         * Note: Only the Plot membership tiers and the bypass-permission are checked here.
@@ -36,25 +38,32 @@ public class PlotSquared_V7 {
         boolean passed = false;
         List<ResultReasons> reasons = new ArrayList<>();
         
-        if (psLocation.isPlotArea()) { // = Plot
+        
+        if (!isPlotWorld(psLocation)) {
+            passed = true;
+            reasons.add(ResultReasons.PS_NOT_A_PLOT_WORLD);
+            return new Result(passed);
+        }
+
+
+        if (!psLocation.isPlotRoad()) {
             
             final Plot plot = psLocation.getPlot();
-            if (plot == null) return;
+            assert plot != null;
             
-            if (plot.hasOwner()) {
-                
-                
+            if (!psLocation.isUnownedPlotArea()) {
+
                 // Normal plot-membership-tier check of player:
                 if (plot.isAdded(player.getUniqueId())) {
                     passed = true;
-                    
-                    if ((plot.hasOwner()) && (plot.isOwner(player.getUniqueId()))) {
+
+                    if (plot.isOwner(player.getUniqueId())) {
                         reasons.add(ResultReasons.PS_OWNER_OF_PLOT);
                     } else {
                         reasons.add(ResultReasons.PS_MEMBER_OF_PLOT);
                     }
                 }
-                
+
                 // Bypass-permission check for occupied plots:
                 switch (check.getActionType()) {
                     case INTERACT -> {
@@ -64,7 +73,7 @@ public class PlotSquared_V7 {
                         }
                     }
                     case PLACE_AND_BREAK -> {
-                        if ((player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER.toString())) 
+                        if ((player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER.toString()))
                                 && (player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_OTHER.toString()))) {
                             passed = true;
                             reasons.add(ResultReasons.PS_BYPASS_PERMISSION_PLACE_OTHER);
@@ -84,7 +93,7 @@ public class PlotSquared_V7 {
                         }
                     }
                 }
-                
+
             } else {
                 
                 // Bypass-permission check for unowned plots:
@@ -116,10 +125,9 @@ public class PlotSquared_V7 {
                         }
                     }
                 }
-                
             }
-        
-        } else if (psLocation.isPlotRoad()) { // = Road
+            
+        } else {
             
             // Bypass-permission check for plot-roads:
             switch (check.getActionType()) {
@@ -153,8 +161,12 @@ public class PlotSquared_V7 {
             
         }
         
-        check.setResult(passed, System.currentTimeMillis(), reasons);
-        
+        return new Result(passed, reasons);
+    }
+    
+    public boolean isPlotWorld(Location location) {
+        PlotArea area = PlotSquared.get().getPlotAreaManager().getPlotArea(location);
+        return area != null;
     }
     
 }
