@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"de.redstoneworld.redrestrictionhelper"},{"l":"de.redstoneworld.redrestrictionhelper.analyze"},{"l":"de.redstoneworld.redrestrictionhelper.analyze.restrictionplugins"},{"l":"de.redstoneworld.redrestrictionhelper.enums"}];updateSearchResults();
