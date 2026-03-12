@@ -10,7 +10,6 @@ import de.redstoneworld.redrestrictionhelper.RestrictionCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
 import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -23,6 +22,7 @@ public class PlotSquared_V7 extends RestrictionPluginCheck {
         super(plugin);
     }
     
+    @Override
     public Result runCheck(RestrictionCheck check) {
         
         /*

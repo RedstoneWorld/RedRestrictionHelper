@@ -26,6 +26,7 @@ public class WorldGuard_V7 extends RestrictionPluginCheck {
         super(plugin);
     }
     
+    @Override
     public Result runCheck(RestrictionCheck check) {
         
         Location wgLocation = BukkitAdapter.adapt(check.getLocation());
