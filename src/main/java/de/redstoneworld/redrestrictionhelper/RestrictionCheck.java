@@ -4,9 +4,13 @@ import de.redstoneworld.redrestrictionhelper.analyze.Analyzer;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
 import de.redstoneworld.redrestrictionhelper.enums.ActionTypes;
 import de.redstoneworld.redrestrictionhelper.enums.CheckMethods;
+import de.redstoneworld.redrestrictionhelper.enums.RestrictionPlugins;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RestrictionCheck {
     
@@ -19,7 +23,7 @@ public class RestrictionCheck {
     private final Player targetPlayer;
     private final CheckMethods checkMethod;
     
-    private Result result;
+    private HashMap<RestrictionPlugins, Result> perPluginResultMap;
     
     
     public RestrictionCheck(Plugin bukkitPlugin, ActionTypes actionType, Location location, Player targetPlayer) {
@@ -45,7 +49,7 @@ public class RestrictionCheck {
     private void runCheck() {
         
         Analyzer analyzer = new Analyzer(bukkitPlugin);
-        result = analyzer.executeAnalyse(this);
+        perPluginResultMap = analyzer.executeAnalyse(this);
     }
     
     public ActionTypes getActionType() {
@@ -68,8 +72,18 @@ public class RestrictionCheck {
         return checkMethod;
     }
     
-    public Result getResult() {
-        return result;
+    public boolean getFinalResult() {
+        AtomicBoolean allowed = new AtomicBoolean(true);
+        
+        if (perPluginResultMap.isEmpty()) return true;
+        
+        perPluginResultMap.forEach((p, r) -> {
+            if (!r.isAllowed()) allowed.set(false);
+        });
+        return allowed.get();
     }
-    
+
+    public HashMap<RestrictionPlugins, Result> getPerPluginResultMap() {
+        return perPluginResultMap;
+    }
 }

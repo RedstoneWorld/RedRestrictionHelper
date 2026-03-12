@@ -20,20 +20,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Analyzer {
     
     private final Plugin bukkitPlugin;
-    private Result result;
+    private final HashMap<RestrictionPlugins, Result> perPluginResultMap = new HashMap<>();
     
     
     public Analyzer(Plugin bukkitPlugin) {
         this.bukkitPlugin = bukkitPlugin;
     }
     
-    public Result executeAnalyse(RestrictionCheck check) {
+    public HashMap<RestrictionPlugins, Result> executeAnalyse(RestrictionCheck check) {
         
         if (check.getCheckMethod() == CheckMethods.EVENT_CALLING) {
             analyseByTestEvent(check);
@@ -42,13 +43,13 @@ public class Analyzer {
             
             if (!hasRestrictionPlugins()) {
                 bukkitPlugin.getServer().getLogger().warning("No restriction plugin found.");
-                return new Result(true);
+                return null;
             }
             
             analyseByRestrictionPlugins(check);
         }
         
-        return result;
+        return perPluginResultMap;
     }
     
     private void analyseByTestEvent(RestrictionCheck check) {
@@ -104,29 +105,20 @@ public class Analyzer {
             }
         }
         
-        result = new Result(passed, reasons);
+        perPluginResultMap.put(RestrictionPlugins.RED_RESTRICTION_HELPER, new Result(passed, reasons));
     }
     
     private void analyseByRestrictionPlugins(RestrictionCheck check) {
         
-        boolean passed = true;
-        List<ResultReasons> reasons = new ArrayList<>();
-        
         if (bukkitPlugin.getServer().getPluginManager().isPluginEnabled(RestrictionPlugins.WORLD_GUARD.getName())) {
             Result wgResult = WorldGuard_V7.runCheck(check);
-            
-            if (!wgResult.isAllowed()) passed = false;
-            if (!wgResult.getResultReason().isEmpty()) reasons.addAll(wgResult.getResultReason());
+            perPluginResultMap.put(RestrictionPlugins.WORLD_GUARD, wgResult);
         }
         
         if (bukkitPlugin.getServer().getPluginManager().isPluginEnabled(RestrictionPlugins.PLOT_SQUARED.getName())) {
             Result psResult = PlotSquared_V7.runCheck(check);
-            
-            if (!psResult.isAllowed()) passed = false;
-            if (!psResult.getResultReason().isEmpty()) reasons.addAll(psResult.getResultReason());
+            perPluginResultMap.put(RestrictionPlugins.PLOT_SQUARED, psResult);
         }
-        
-        result = new Result(passed, reasons);
     }
     
     public boolean hasRestrictionPlugins() {
