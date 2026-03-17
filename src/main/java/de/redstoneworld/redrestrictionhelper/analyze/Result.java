@@ -1,6 +1,6 @@
 package de.redstoneworld.redrestrictionhelper.analyze;
 
-import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
+import de.redstoneworld.redrestrictionhelper.enums.AllowReasons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,24 +8,24 @@ import java.util.List;
 public class Result {
     
     private final boolean allowed;
-    private final List<ResultReasons> resultReason;
+    private final List<AllowReasons> allowReasons;
     private final long timeOfCheck;
 
-    public Result(boolean allowed, List<ResultReasons> resultReason, long timeOfCheck) {
+    public Result(boolean allowed, List<AllowReasons> allowReasons, long timeOfCheck) {
         this.allowed = allowed;
-        this.resultReason = resultReason;
+        this.allowReasons = allowReasons;
         this.timeOfCheck = timeOfCheck;
     }
     
-    public Result(boolean allowed, List<ResultReasons> resultReason) {
+    public Result(boolean allowed, List<AllowReasons> allowReasons) {
         this.allowed = allowed;
-        this.resultReason = resultReason;
+        this.allowReasons = allowReasons;
         this.timeOfCheck = System.currentTimeMillis();
     }
     
     public Result(boolean allowed) {
         this.allowed = allowed;
-        this.resultReason = new ArrayList<>();
+        this.allowReasons = new ArrayList<>();
         this.timeOfCheck = System.currentTimeMillis();
     }
     
@@ -33,8 +33,8 @@ public class Result {
         return allowed;
     }
 
-    public List<ResultReasons> getResultReason() {
-        return resultReason;
+    public List<AllowReasons> getAllowReasons() {
+        return allowReasons;
     }
 
     public long getTimeOfCheck() {

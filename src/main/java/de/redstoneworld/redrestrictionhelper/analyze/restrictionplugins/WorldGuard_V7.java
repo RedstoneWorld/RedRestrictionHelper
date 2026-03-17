@@ -13,7 +13,7 @@ import com.sk89q.worldguard.protection.regions.RegionQuery;
 import de.redstoneworld.redrestrictionhelper.RestrictionCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
-import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
+import de.redstoneworld.redrestrictionhelper.enums.AllowReasons;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -27,16 +27,16 @@ public class WorldGuard_V7 extends RestrictionPluginCheck {
         Player player = check.getTargetPlayer();
         LocalPlayer wgPlayer = WorldGuardPlugin.inst().wrapPlayer(player);
         boolean passed = false;
-        List<ResultReasons> reasons = new ArrayList<>();
+        List<AllowReasons> reasons = new ArrayList<>();
         
         
         if (!isRestrictedWorld(wgPlayer.getWorld())) {
             passed = true;
-            reasons.add(ResultReasons.WG_WORLD_DISABLED);
+            reasons.add(AllowReasons.WG_WORLD_DISABLED);
             return new Result(passed, reasons);
         } else if (hasWorldBypassPermission(wgPlayer)) {
             passed = true;
-            reasons.add(ResultReasons.WG_BYPASS_PERMISSION);
+            reasons.add(AllowReasons.WG_BYPASS_PERMISSION);
             return new Result(passed, reasons);
         }
         
@@ -48,20 +48,20 @@ public class WorldGuard_V7 extends RestrictionPluginCheck {
             case INTERACT -> {
                 if (query.testState(wgLocation, wgPlayer, Flags.INTERACT)) {
                     passed = true;
-                    reasons.add(ResultReasons.WG_FLAG_INTERACT);
+                    reasons.add(AllowReasons.WG_FLAG_INTERACT);
                 }
             }
             case PLACE_AND_BREAK -> {} // high-prio "BUILD" check is below
             case PLACE -> {
                 if (query.testState(wgLocation, wgPlayer, Flags.BLOCK_PLACE)) {
                     passed = true;
-                    reasons.add(ResultReasons.WG_FLAG_PLACE);
+                    reasons.add(AllowReasons.WG_FLAG_PLACE);
                 }
             }
             case BREAK -> {
                 if (query.testState(wgLocation, wgPlayer, Flags.BLOCK_BREAK)) {
                     passed = true;
-                    reasons.add(ResultReasons.WG_FLAG_BREAK);
+                    reasons.add(AllowReasons.WG_FLAG_BREAK);
                 }
             }
         }
@@ -69,7 +69,7 @@ public class WorldGuard_V7 extends RestrictionPluginCheck {
         // Also check the high-prio BUILD flag to validate the region-membership tier (region owner / member):
         if (query.testState(wgLocation, wgPlayer, Flags.BUILD)) {
             passed = true;
-            reasons.add(ResultReasons.WG_FLAG_BUILD);
+            reasons.add(AllowReasons.WG_FLAG_BUILD);
         }
         
         return new Result(passed, reasons);

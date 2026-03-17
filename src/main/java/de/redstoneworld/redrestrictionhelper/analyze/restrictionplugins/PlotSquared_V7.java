@@ -9,7 +9,7 @@ import com.plotsquared.core.plot.PlotArea;
 import de.redstoneworld.redrestrictionhelper.RestrictionCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
-import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
+import de.redstoneworld.redrestrictionhelper.enums.AllowReasons;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -30,12 +30,12 @@ public class PlotSquared_V7 extends RestrictionPluginCheck {
         Location psLocation = BukkitUtil.adapt(check.getLocation());
         Player player = check.getTargetPlayer();
         boolean passed = false;
-        List<ResultReasons> reasons = new ArrayList<>();
+        List<AllowReasons> reasons = new ArrayList<>();
         
         
         if (!isPlotWorld(psLocation)) {
             passed = true;
-            reasons.add(ResultReasons.PS_NOT_A_PLOT_WORLD);
+            reasons.add(AllowReasons.PS_NOT_A_PLOT_WORLD);
             return new Result(passed);
         }
 
@@ -52,9 +52,9 @@ public class PlotSquared_V7 extends RestrictionPluginCheck {
                     passed = true;
 
                     if (plot.isOwner(player.getUniqueId())) {
-                        reasons.add(ResultReasons.PS_OWNER_OF_PLOT);
+                        reasons.add(AllowReasons.PS_OWNER_OF_PLOT);
                     } else {
-                        reasons.add(ResultReasons.PS_MEMBER_OF_PLOT);
+                        reasons.add(AllowReasons.PS_MEMBER_OF_PLOT);
                     }
                 }
 
@@ -63,27 +63,27 @@ public class PlotSquared_V7 extends RestrictionPluginCheck {
                     case INTERACT -> {
                         if (player.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString())) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_INTERACT_OTHER);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_INTERACT_OTHER);
                         }
                     }
                     case PLACE_AND_BREAK -> {
                         if ((player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER.toString()))
                                 && (player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_OTHER.toString()))) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_PLACE_OTHER);
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_BREAK_OTHER);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_PLACE_OTHER);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_BREAK_OTHER);
                         }
                     }
                     case PLACE -> {
                         if (player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER.toString())) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_PLACE_OTHER);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_PLACE_OTHER);
                         }
                     }
                     case BREAK -> {
                         if (player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_OTHER.toString())) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_BREAK_OTHER);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_BREAK_OTHER);
                         }
                     }
                 }
@@ -95,27 +95,27 @@ public class PlotSquared_V7 extends RestrictionPluginCheck {
                     case INTERACT -> {
                         if (player.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString())) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_INTERACT_UNOWNED);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_INTERACT_UNOWNED);
                         }
                     }
                     case PLACE_AND_BREAK -> {
                         if ((player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED.toString())) 
                                 && (player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED.toString()))) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_PLACE_UNOWNED);
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_BREAK_UNOWNED);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_PLACE_UNOWNED);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_BREAK_UNOWNED);
                         }
                     }
                     case PLACE -> {
                         if (player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED.toString())) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_PLACE_UNOWNED);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_PLACE_UNOWNED);
                         }
                     }
                     case BREAK -> {
                         if (player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED.toString())) {
                             passed = true;
-                            reasons.add(ResultReasons.PS_BYPASS_PERMISSION_BREAK_UNOWNED);
+                            reasons.add(AllowReasons.PS_BYPASS_PERMISSION_BREAK_UNOWNED);
                         }
                     }
                 }
@@ -128,27 +128,27 @@ public class PlotSquared_V7 extends RestrictionPluginCheck {
                 case INTERACT -> {
                     if (player.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString())) {
                         passed = true;
-                        reasons.add(ResultReasons.PS_BYPASS_PERMISSION_INTERACT_ROAD);
+                        reasons.add(AllowReasons.PS_BYPASS_PERMISSION_INTERACT_ROAD);
                     }
                 }
                 case PLACE_AND_BREAK -> {
                     if ((player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD.toString())) 
                             && (player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_ROAD.toString()))) {
                         passed = true;
-                        reasons.add(ResultReasons.PS_BYPASS_PERMISSION_PLACE_ROAD);
-                        reasons.add(ResultReasons.PS_BYPASS_PERMISSION_BREAK_ROAD);
+                        reasons.add(AllowReasons.PS_BYPASS_PERMISSION_PLACE_ROAD);
+                        reasons.add(AllowReasons.PS_BYPASS_PERMISSION_BREAK_ROAD);
                     }
                 }
                 case PLACE -> {
                     if (player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD.toString())) {
                         passed = true;
-                        reasons.add(ResultReasons.PS_BYPASS_PERMISSION_PLACE_ROAD);
+                        reasons.add(AllowReasons.PS_BYPASS_PERMISSION_PLACE_ROAD);
                     }
                 }
                 case BREAK -> {
                     if (player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_ROAD.toString())) {
                         passed = true;
-                        reasons.add(ResultReasons.PS_BYPASS_PERMISSION_BREAK_ROAD);
+                        reasons.add(AllowReasons.PS_BYPASS_PERMISSION_BREAK_ROAD);
                     }
                 }
             }

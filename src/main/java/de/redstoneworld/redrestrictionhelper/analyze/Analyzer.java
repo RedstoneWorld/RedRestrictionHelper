@@ -3,10 +3,9 @@ package de.redstoneworld.redrestrictionhelper.analyze;
 import de.redstoneworld.redrestrictionhelper.RestrictionCheck;
 import de.redstoneworld.redrestrictionhelper.enums.CheckMethods;
 import de.redstoneworld.redrestrictionhelper.enums.RestrictionPlugins;
-import de.redstoneworld.redrestrictionhelper.enums.ResultReasons;
+import de.redstoneworld.redrestrictionhelper.enums.AllowReasons;
 import de.redstoneworld.redrestrictionhelper.analyze.restrictionplugins.PlotSquared_V7;
 import de.redstoneworld.redrestrictionhelper.analyze.restrictionplugins.WorldGuard_V7;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -57,7 +56,7 @@ public class Analyzer {
         Block block = check.getLocation().getBlock();
         Player player = check.getTargetPlayer();
         boolean passed = false;
-        List<ResultReasons> reasons = new ArrayList<>();
+        List<AllowReasons> reasons = new ArrayList<>();
         
         
         // Checking build permission by test-events. (The block is generally not placed via 'callEvent()' method.)
@@ -70,7 +69,7 @@ public class Analyzer {
                 
                 // special event-result here:
                 passed = (testInteractEvent.useInteractedBlock() == Event.Result.ALLOW);
-                if (passed) reasons.add(ResultReasons.RRH_EVENT_INTERACT);
+                if (passed) reasons.add(AllowReasons.RRH_EVENT_INTERACT);
             }
             case PLACE_AND_BREAK -> {
                 // Used 'BlockPlaceEvent', because e.g. 'EntityPlaceEvent' is not handled the same for every restriction system.
@@ -83,8 +82,8 @@ public class Analyzer {
                 new TestEventExecuter(bukkitPlugin, check.getLocation(), testBreakEvent, false);
                 
                 passed = ((!testPlaceEvent.isCancelled()) && (!testBreakEvent.isCancelled()));
-                if (passed) reasons.add(ResultReasons.RRH_EVENT_PLACE);
-                if (passed) reasons.add(ResultReasons.RRH_EVENT_BREAK);
+                if (passed) reasons.add(AllowReasons.RRH_EVENT_PLACE);
+                if (passed) reasons.add(AllowReasons.RRH_EVENT_BREAK);
             }
             case PLACE -> {
                 // Used 'BlockPlaceEvent', because e.g. 'EntityPlaceEvent' is not handled the same for every restriction system.
@@ -93,7 +92,7 @@ public class Analyzer {
                 new TestEventExecuter(bukkitPlugin, check.getLocation(), testPlaceEvent, false);
                 
                 passed = !testPlaceEvent.isCancelled();
-                if (passed) reasons.add(ResultReasons.RRH_EVENT_PLACE);
+                if (passed) reasons.add(AllowReasons.RRH_EVENT_PLACE);
             }
             case BREAK -> {
                 // Used 'BlockBreakEvent', because e.g. 'EntityBreak-Door-Event' is not handled the same for every restriction system.
@@ -101,7 +100,7 @@ public class Analyzer {
                 new TestEventExecuter(bukkitPlugin, check.getLocation(), testBreakEvent, false);
                 
                 passed = !testBreakEvent.isCancelled();
-                if (passed) reasons.add(ResultReasons.RRH_EVENT_BREAK);
+                if (passed) reasons.add(AllowReasons.RRH_EVENT_BREAK);
             }
         }
         

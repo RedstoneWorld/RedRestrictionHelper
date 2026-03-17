@@ -1,6 +1,6 @@
 package de.redstoneworld.redrestrictionhelper.enums;
 
-public enum ResultReasons {
+public enum AllowReasons {
     
     RRH_EVENT_INTERACT(RestrictionPlugins.RED_RESTRICTION_HELPER, "The interact event was not cancelled from the server."),
     RRH_EVENT_PLACE(RestrictionPlugins.RED_RESTRICTION_HELPER, "The block-place event was not cancelled from the server."),
@@ -32,7 +32,7 @@ public enum ResultReasons {
     private final RestrictionPlugins restrictionPlugin;
     private final String reasonDescription;
     
-    ResultReasons(RestrictionPlugins restrictionPlugin, String description) {
+    AllowReasons(RestrictionPlugins restrictionPlugin, String description) {
         this.restrictionPlugin = restrictionPlugin;
         this.reasonDescription = description;
     }
