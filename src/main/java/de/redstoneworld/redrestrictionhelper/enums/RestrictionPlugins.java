@@ -17,6 +17,7 @@ public enum RestrictionPlugins {
             .map(RestrictionPlugins::getName)
             .collect(Collectors.toSet());
     
+    
     RestrictionPlugins(String pluginName, int supportedVersion) {
         this.restrictionPluginName = pluginName;
         this.supportedVersion = supportedVersion;

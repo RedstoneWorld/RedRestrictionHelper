@@ -32,6 +32,7 @@ public enum AllowReasons {
     private final RestrictionPlugins restrictionPlugin;
     private final String reasonDescription;
     
+    
     AllowReasons(RestrictionPlugins restrictionPlugin, String description) {
         this.restrictionPlugin = restrictionPlugin;
         this.reasonDescription = description;

@@ -5,5 +5,5 @@ public enum ActionTypes {
     INTERACT,
     PLACE_AND_BREAK,
     PLACE,
-    BREAK
+    BREAK;
 }
