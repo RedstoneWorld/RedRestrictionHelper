@@ -6,6 +6,7 @@ import de.redstoneworld.redrestrictionhelper.enums.RestrictionPlugins;
 import de.redstoneworld.redrestrictionhelper.enums.AllowReasons;
 import de.redstoneworld.redrestrictionhelper.analyze.queries.PlotSquared_V7;
 import de.redstoneworld.redrestrictionhelper.analyze.queries.WorldGuard_V7;
+import de.redstoneworld.redrestrictionhelper.util.RestrictionPluginManager;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -21,7 +22,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Analyzer {
     
@@ -40,7 +40,7 @@ public class Analyzer {
             
         } else if (check.getCheckMethod() == CheckMethods.RESTRICTION_PLUGIN_API) {
             
-            if (!hasRestrictionPlugins()) {
+            if (!RestrictionPluginManager.serverHasRestrictionPlugins()) {
                 bukkitPlugin.getServer().getLogger().warning("No restriction plugin found.");
                 return null;
             }
@@ -109,31 +109,15 @@ public class Analyzer {
     
     private void analyseByRestrictionPlugins(RestrictionCheck check) {
         
-        if (bukkitPlugin.getServer().getPluginManager().isPluginEnabled(RestrictionPlugins.WORLD_GUARD.getName())) {
+        if (RestrictionPluginManager.isPluginEnabled(RestrictionPlugins.WORLD_GUARD)) {
             Result wgResult = WorldGuard_V7.runCheck(check);
             perPluginResultMap.put(RestrictionPlugins.WORLD_GUARD, wgResult);
         }
         
-        if (bukkitPlugin.getServer().getPluginManager().isPluginEnabled(RestrictionPlugins.PLOT_SQUARED.getName())) {
+        if (RestrictionPluginManager.isPluginEnabled(RestrictionPlugins.PLOT_SQUARED)) {
             Result psResult = PlotSquared_V7.runCheck(check);
             perPluginResultMap.put(RestrictionPlugins.PLOT_SQUARED, psResult);
         }
-    }
-    
-    public boolean hasRestrictionPlugins() {
-        
-        AtomicBoolean foundPlugin = new AtomicBoolean(false);
-        
-        RestrictionPlugins.RESTRICTION_PLUGIN_NAMES.forEach(plugin -> {
-            
-            if (plugin.equalsIgnoreCase(RestrictionPlugins.RED_RESTRICTION_HELPER.getName())) return;
-            
-            if (bukkitPlugin.getServer().getPluginManager().isPluginEnabled(plugin)) {
-                foundPlugin.set(true);
-            }
-        });
-        
-        return foundPlugin.get();
     }
 
 }

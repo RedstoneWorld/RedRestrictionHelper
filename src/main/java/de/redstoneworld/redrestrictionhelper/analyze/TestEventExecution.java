@@ -1,6 +1,7 @@
 package de.redstoneworld.redrestrictionhelper.analyze;
 
 import de.redstoneworld.redrestrictionhelper.enums.RestrictionPlugins;
+import de.redstoneworld.redrestrictionhelper.util.RestrictionPluginManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -44,7 +45,7 @@ public class TestEventExecution {
         if (pluginFilter) {
     
             Arrays.stream(testEvent.getHandlers().getRegisteredListeners())
-                    .filter(listener -> RestrictionPlugins.RESTRICTION_PLUGIN_NAMES.contains(listener.getPlugin().getName()))
+                    .filter(listener -> RestrictionPluginManager.getPluginNameList().contains(listener.getPlugin().getName()))
                     .filter(listener -> listener.getPlugin().isEnabled())
                     .anyMatch(listener -> {
                         try {
