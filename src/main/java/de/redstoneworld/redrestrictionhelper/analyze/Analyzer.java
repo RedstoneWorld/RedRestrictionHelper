@@ -59,7 +59,7 @@ public class Analyzer {
         List<AllowReasons> reasons = new ArrayList<>();
         
         
-        // Checking build permission by test-events. (The block is generally not placed via 'callEvent()' method.)
+        // Checking permission by test-events. (The block is generally not changed / placed via the 'callEvent()' method.)
         
         switch (check.getActionType()) {
             case INTERACT -> {
