@@ -1,4 +1,4 @@
-package de.redstoneworld.redrestrictionhelper.analyze.restrictionplugins;
+package de.redstoneworld.redrestrictionhelper.analyze.queries;
 
 import com.plotsquared.bukkit.util.BukkitUtil;
 import com.plotsquared.core.PlotSquared;

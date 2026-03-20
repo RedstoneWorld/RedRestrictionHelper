@@ -1,4 +1,4 @@
-package de.redstoneworld.redrestrictionhelper.analyze.restrictionplugins;
+package de.redstoneworld.redrestrictionhelper.analyze.queries;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.util.Location;
