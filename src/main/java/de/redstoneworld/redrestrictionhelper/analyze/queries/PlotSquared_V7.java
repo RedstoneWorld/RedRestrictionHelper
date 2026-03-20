@@ -7,7 +7,7 @@ import com.plotsquared.core.permissions.Permission;
 import com.plotsquared.core.plot.Plot;
 import com.plotsquared.core.plot.PlotArea;
 import de.redstoneworld.redrestrictionhelper.RestrictionCheck;
-import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
+import de.redstoneworld.redrestrictionhelper.analyze.PluginQueryExecution;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
 import de.redstoneworld.redrestrictionhelper.enums.AllowReasons;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlotSquared_V7 extends RestrictionPluginCheck {
+public class PlotSquared_V7 extends PluginQueryExecution {
     
     public static Result runCheck(RestrictionCheck check) {
         

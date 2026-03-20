@@ -3,14 +3,13 @@ package de.redstoneworld.redrestrictionhelper.analyze;
 import de.redstoneworld.redrestrictionhelper.enums.RestrictionPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventException;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 
-public class TestEventExecuter {
+public class TestEventExecution {
     
     private static final boolean IS_FOLIA = isFoliaServer();
     
@@ -20,7 +19,7 @@ public class TestEventExecuter {
     private final boolean pluginFilter;
     
     
-    public TestEventExecuter(Plugin bukkitPlugin, Location location, Event testEvent, boolean pluginFilter) {
+    public TestEventExecution(Plugin bukkitPlugin, Location location, Event testEvent, boolean pluginFilter) {
         this.bukkitPlugin = bukkitPlugin;
         this.location = location;
         this.testEvent = testEvent;

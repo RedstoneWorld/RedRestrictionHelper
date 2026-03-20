@@ -11,7 +11,7 @@ import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionQuery;
 import de.redstoneworld.redrestrictionhelper.RestrictionCheck;
-import de.redstoneworld.redrestrictionhelper.analyze.RestrictionPluginCheck;
+import de.redstoneworld.redrestrictionhelper.analyze.PluginQueryExecution;
 import de.redstoneworld.redrestrictionhelper.analyze.Result;
 import de.redstoneworld.redrestrictionhelper.enums.AllowReasons;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorldGuard_V7 extends RestrictionPluginCheck {
+public class WorldGuard_V7 extends PluginQueryExecution {
     
     public static Result runCheck(RestrictionCheck check) {
         

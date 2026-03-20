@@ -65,7 +65,7 @@ public class Analyzer {
             case INTERACT -> {
                 PlayerInteractEvent testInteractEvent = new PlayerInteractEvent(player, Action.RIGHT_CLICK_BLOCK, new ItemStack(Material.AIR), 
                         block, BlockFace.UP);
-                new TestEventExecuter(bukkitPlugin, check.getLocation(), testInteractEvent, false);
+                new TestEventExecution(bukkitPlugin, check.getLocation(), testInteractEvent, false);
                 
                 // special event-result here:
                 passed = (testInteractEvent.useInteractedBlock() == Event.Result.ALLOW);
@@ -75,11 +75,11 @@ public class Analyzer {
                 // Used 'BlockPlaceEvent', because e.g. 'EntityPlaceEvent' is not handled the same for every restriction system.
                 BlockPlaceEvent testPlaceEvent = new BlockPlaceEvent(block, block.getState(), block, new ItemStack(Material.AIR), 
                         player, false);
-                new TestEventExecuter(bukkitPlugin, check.getLocation(), testPlaceEvent, false);
+                new TestEventExecution(bukkitPlugin, check.getLocation(), testPlaceEvent, false);
                 
                 // Used 'BlockBreakEvent', because e.g. 'EntityBreak-Door-Event' is not handled the same for every restriction system.
                 BlockBreakEvent testBreakEvent = new BlockBreakEvent(block, player);
-                new TestEventExecuter(bukkitPlugin, check.getLocation(), testBreakEvent, false);
+                new TestEventExecution(bukkitPlugin, check.getLocation(), testBreakEvent, false);
                 
                 passed = ((!testPlaceEvent.isCancelled()) && (!testBreakEvent.isCancelled()));
                 if (passed) reasons.add(AllowReasons.RRH_EVENT_PLACE);
@@ -89,7 +89,7 @@ public class Analyzer {
                 // Used 'BlockPlaceEvent', because e.g. 'EntityPlaceEvent' is not handled the same for every restriction system.
                 BlockPlaceEvent testPlaceEvent = new BlockPlaceEvent(block, block.getState(), block, new ItemStack(Material.AIR), 
                         player, false);
-                new TestEventExecuter(bukkitPlugin, check.getLocation(), testPlaceEvent, false);
+                new TestEventExecution(bukkitPlugin, check.getLocation(), testPlaceEvent, false);
                 
                 passed = !testPlaceEvent.isCancelled();
                 if (passed) reasons.add(AllowReasons.RRH_EVENT_PLACE);
@@ -97,7 +97,7 @@ public class Analyzer {
             case BREAK -> {
                 // Used 'BlockBreakEvent', because e.g. 'EntityBreak-Door-Event' is not handled the same for every restriction system.
                 BlockBreakEvent testBreakEvent = new BlockBreakEvent(block, player);
-                new TestEventExecuter(bukkitPlugin, check.getLocation(), testBreakEvent, false);
+                new TestEventExecution(bukkitPlugin, check.getLocation(), testBreakEvent, false);
                 
                 passed = !testBreakEvent.isCancelled();
                 if (passed) reasons.add(AllowReasons.RRH_EVENT_BREAK);
