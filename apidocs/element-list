@@ -1,4 +1,5 @@
 de.redstoneworld.redrestrictionhelper
 de.redstoneworld.redrestrictionhelper.analyze
-de.redstoneworld.redrestrictionhelper.analyze.restrictionplugins
+de.redstoneworld.redrestrictionhelper.analyze.queries
 de.redstoneworld.redrestrictionhelper.enums
+de.redstoneworld.redrestrictionhelper.util
