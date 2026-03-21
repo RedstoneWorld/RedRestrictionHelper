@@ -51,3 +51,4 @@ dependencies {
 
 - [Java-Doc](https://redstoneworld.github.io/RedRestrictionHelper/apidocs)
 - [Project Dependencies](https://redstoneworld.github.io/RedRestrictionHelper/dependencies.html)
+- [Wiki / Instructions](https://github.com/RedstoneWorld/RedRestrictionHelper/wiki)
